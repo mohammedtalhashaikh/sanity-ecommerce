@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 
 import { useStateContext } from "../context/StateContext";
 import { urlFor } from "../lib/client";
+import getStripe from "../lib/getStripe";
 
 const Cart = () => {
   const cartRef = useRef();
@@ -37,7 +38,7 @@ const Cart = () => {
     if (response.statusCode === 500) return;
 
     const data = await response.json();
-
+    console.log("data we got ", data);
     toast.loading("Redirecting...");
 
     stripe.redirectToCheckout({ sessionId: data.id });
@@ -96,9 +97,7 @@ const Cart = () => {
                         >
                           <AiOutlineMinus />
                         </span>
-                        <span className="num" onClick="">
-                          {item.quantity}
-                        </span>
+                        <span className="num">{item.quantity}</span>
                         <span
                           className="plus"
                           onClick={() =>
